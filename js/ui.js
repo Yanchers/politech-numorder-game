@@ -166,7 +166,7 @@ export function renderLevelUI(
     });
 
     if (lvl.choices && lvl.choices.length > 0) {
-        lvl.choices.forEach((c) => {
+        shuffleArray(lvl.choices).forEach((c) => {
             const ch = document.createElement("div");
             ch.className = "choice";
             ch.textContent = c;
@@ -237,4 +237,20 @@ export function renderLeaderboard(scores) {
         table.appendChild(tr);
     });
     board.appendChild(table);
+}
+
+export function shuffleArray(originalArray) {
+    const array = originalArray.slice(); // create a copy
+    let currentIndex = array.length;
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+        // Pick a remaining element...
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
 }
