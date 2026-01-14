@@ -1,0 +1,78 @@
+#final-stats p {
+    margin: 6px 0;
+}
+
+#final .buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+#final h2 .ph {
+    font-size: 28px;
+    color: #ffb020;
+}
+
+
+#final-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 18px 12px;
+}
+
+.final-card {
+    width: 100%;
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.final-card-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.final-card-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px 18px;
+}
+
+.final-card .stat {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background-color: var(--card);
+    border-radius: 10px;
+}
+
+.final-card .stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.final-card .stat-icon .ph {
+    font-size: 20px;
+    color: #3b82f6;
+}
+
+.final-card .stat-label {
+    font-size: 13px;
+}
+
+.final-card .stat-value {
+    margin-left: auto;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+@media (max-width: 520px) {
+    .final-card-body {
+        grid-template-columns: 1fr;
+    }
+}

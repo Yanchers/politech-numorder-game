@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Уровни — Порядок чисел</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/levels.css">
+
+    <script defer type="module" src="../js/levels-page.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="header-text">
+            <i class="ph ph-game-controller" style="margin-right:8px;"></i> Почини цепочки
+        </div>
+        <div class="current-user-container">
+            <span id="current-user">Нет игрока</span>
+            <button id="btn-logout"><i class="ph ph-sign-out" style="margin-right:6px;"></i>Выйти</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="levels" class="view">
+            <h2 id="levels-title">Уровни</h2>
+            <div id="levels-list"></div>
+            <button id="btn-back-menu"><i class="ph ph-arrow-left" style="margin-right:6px"></i>Назад</button>
+        </section>
+    </main>
+</body>
+
+</html>

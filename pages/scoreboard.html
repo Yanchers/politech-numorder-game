@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Таблица рекордов — Порядок чисел</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/scoreboard.css">
+    <script defer type="module" src="../js/scoreboard-page.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="header-text">
+            <i class="ph ph-game-controller" style="margin-right:8px;"></i> Почини цепочки
+        </div>
+        <div class="current-user-container">
+            <span id="current-user">Нет игрока</span>
+            <button id="btn-logout"><i class="ph ph-sign-out" style="margin-right:6px;"></i>Выйти</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="scoreboard" class="view">
+            <h2>
+                <i class="ph ph-trophy" style="margin-right:8px;"></i>
+                Таблица рекордов
+            </h2>
+            <div id="leaderboard"></div>
+            <button class="btn-restart"><i class="ph ph-arrow-counter-clockwise" style="margin-right:6px"></i>В
+                начало</button>
+        </section>
+    </main>
+
+</body>
+
+</html>

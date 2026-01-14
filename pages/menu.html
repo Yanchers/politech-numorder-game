@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Меню — Порядок чисел</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <script defer type="module" src="../js/menu-page.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="header-text">
+            <i class="ph ph-game-controller" style="margin-right:8px;"></i> Почини цепочки
+        </div>
+        <div class="current-user-container">
+            <span id="current-user">Нет игрока</span>
+            <button id="btn-logout"><i class="ph ph-sign-out" style="margin-right:6px;"></i>Выйти</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="menu" class="view">
+            <h2>
+                <i class="ph ph-sliders" style="margin-right:8px;"></i>
+                Выбор сложности
+            </h2>
+            <p>На выбор предлагаются три уровня сложности:</p>
+            <ul>
+                <li>Легкий - простые последовательности с вариантами ответов, много времени.</li>
+                <li>Нормальный - последовательности чуть сложнее, также предстоит самостоятельно вписать ответы, времени
+                    меньше.</li>
+                <li>Сложный - продвинутые последовательности, которых может быть несколько на уровне, еще меньше
+                    времени!</li>
+            </ul>
+            <p>Правила игры: каждая сложность подразумевает прохождение определенного количества уровней. Уровни даются
+                в случайном порядке.</p>
+            <div id="difficulties"></div>
+
+            <div class="buttons">
+                <button id="btn-scoreboard"><i class="ph ph-trophy" style="margin-right:6px"></i>Таблица
+                    рекордов</button>
+                <button id="btn-help"><i class="ph ph-question" style="margin-right:6px"></i>Помощь</button>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

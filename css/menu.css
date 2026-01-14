@@ -1,0 +1,31 @@
+#menu h2 .ph {
+    font-size: 28px;
+}
+
+#menu h2 {
+    margin-bottom: 16px;
+}
+
+#difficulties {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+#difficulties button {
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--accent-2);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    font-size: 16px;
+}
+
+.buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}

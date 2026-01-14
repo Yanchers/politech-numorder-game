@@ -1,0 +1,15 @@
+#help h2 .ph {
+    font-size: 28px;
+}
+
+#help h2 {
+    margin-bottom: 16px;
+}
+
+#help p {
+    margin: 12px 0;
+}
+
+#help .btn-back-menu {
+    margin-top: 20px;
+}

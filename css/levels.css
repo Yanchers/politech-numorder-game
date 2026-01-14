@@ -1,0 +1,14 @@
+#levels-title {
+    margin-bottom: 12px;
+}
+
+#levels-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+#levels-list button {
+    flex: 1 1 calc(30.333% - 16px);
+}

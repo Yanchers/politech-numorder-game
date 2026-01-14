@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Меню — Порядок чисел</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/help.css">
+    <script defer type="module" src="../js/help-page.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="header-text">
+            <i class="ph ph-game-controller" style="margin-right:8px;"></i> Почини цепочки
+        </div>
+        <div class="current-user-container">
+            <span id="current-user">Нет игрока</span>
+            <button id="btn-logout"><i class="ph ph-sign-out" style="margin-right:6px;"></i>Выйти</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="help" class="view">
+            <h2>
+                <i class="ph ph-question" style="margin-right:8px;"></i>
+                Помощь
+            </h2>
+            <p>
+                В данной игре вам предстоит восстанавливать корректный порядок числовых последовательностей.
+                Последовательности зависят от сложности игры, и могут быть арифметическими, геометрическими или
+                произвольными.
+            </p>
+            <p>
+                В начале каждого уровня вам будет представлена последовательность с пропущенными числами. Ваша задача
+                — определить закономерность и заполнить пропуски правильными числами. Для заполнения пропусков будет
+                предложен выбор из чисел, но в каких-то случаях придется вводить числа вручную!
+            </p>
+            <p>
+                За правильное восстановление последовательности вы получаете очки, которые будут влиять на ваш рейтинг в
+                таблице рейтингов. Логика начисления очков:
+            <ul>
+                <li>За правильный ответ вы получаете 100 очков.</li>
+                <li>Сложность напрямую влияет на полученные очки и умножает их: Легкая - 1x, Средняя - 1.5x, Сложная -
+                    2x.</li>
+                <li>Если выполните задание быстрее таймера - оставшееся время будет добавлено к вашим очкам (время *
+                    базовое кол-во очков * 0.5)</li>
+                <li>Ошибки снижают количество получаемых очков (кол-во ошибок * 50).</li>
+            </ul>
+            </p>
+
+            <button id="btn-back"><i class="ph ph-arrow-left" style="margin-right:6px"></i>Меню</button>
+        </section>
+    </main>
+</body>
+
+</html>

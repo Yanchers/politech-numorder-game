@@ -1,0 +1,45 @@
+#scoreboard h2 {
+    margin-bottom: 16px;
+}
+
+#scoreboard h2 .ph {
+    font-size: 28px;
+}
+
+#leaderboard table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#leaderboard th,
+#leaderboard td {
+    padding: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.btn-restart {
+    margin-top: 12px;
+}
+
+/* Make leaderboard scrollable and keep header visible */
+#leaderboard {
+    max-height: 430px;
+    overflow-y: auto;
+    border-radius: 10px;
+    margin: 6px;
+    background: var(--card-lighter);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+#leaderboard th {
+    position: sticky;
+    top: 0;
+    background: var(--card);
+    z-index: 3;
+}
+
+#leaderboard th div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
