@@ -178,7 +178,7 @@ export function finishLevel(success) {
     clearInterval(state.timerId);
     const entry = {
         player: state.user.name,
-        difficulty: state.difficulty,
+        difficulty: LEVELS[state.difficulty].title,
         level: state.level.id,
         score: state.totalScore,
         errors: state.totalErrors,
