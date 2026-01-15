@@ -16,6 +16,8 @@ window.addEventListener("DOMContentLoaded", () => {
     const entry = storage.loadLastResult();
     if (entry) {
         ui.renderFinalStats(entry);
+        // анимация конфетти
+        ui.playFinalAnimation(entry);
     }
 
     document.getElementById("btn-restart").onclick = () => ui.show(ui.views.menu);

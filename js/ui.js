@@ -9,8 +9,8 @@ export const views = {
 };
 
 export function show(view) {
-    const cur = window.location.pathname.split('/').pop();
-    const dest = view.split('/').pop();
+    const cur = window.location.pathname.split("/").pop();
+    const dest = view.split("/").pop();
     if (cur === dest) return;
     window.location.href = view;
     return;
@@ -64,7 +64,9 @@ export function setFeedback(text, duration = 3000) {
 
 export function updateTimerDisplay(seconds) {
     const el = document.getElementById("timer");
-    const minutesStr = Math.floor(seconds / 60).toString().padStart(2, "0");
+    const minutesStr = Math.floor(seconds / 60)
+        .toString()
+        .padStart(2, "0");
     const secondsStr = (seconds % 60).toString().padStart(2, "0");
     el.textContent = `${minutesStr}:${secondsStr}`;
 
@@ -79,9 +81,9 @@ export function renderDifficultiesList(difficulties, onSelect) {
     const list = document.getElementById("difficulties");
     list.innerHTML = "";
     const iconMap = {
-        "Лёгкий": "smiley",
-        "Нормальный": "smiley-meh",
-        "Сложный": "smiley-angry",
+        Лёгкий: "smiley",
+        Нормальный: "smiley-meh",
+        Сложный: "smiley-angry",
         // easy: "smiley",
         // normal: "star",
         // hard: "warning",
@@ -198,7 +200,7 @@ export function renderFinalStats(entry) {
                 <div class="stat">
                     <div class="stat-icon"><i class="ph ph-user"></i></div>
                     <div class="stat-label">Игрок</div>
-                    <div class="stat-value">${entry.player || '—'}</div>
+                    <div class="stat-value">${entry.player || "—"}</div>
                 </div>
                 <div class="stat">
                     <div class="stat-icon"><i class="ph ph-star"></i></div>
@@ -239,6 +241,42 @@ export function renderLeaderboard(scores) {
     board.appendChild(table);
 }
 
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+export async function playFinalAnimation(entry = { score: 0, errors: 0 }) {
+    const score = entry.score;
+    const errors = entry.errors;
+
+    // конфигурация по порогам
+    let confettiCount = 0;
+    if (errors == 0) {
+        confettiCount = 12;
+    } else if (errors <= 2) {
+        confettiCount = 5;
+    } else {
+        confettiCount = 3;
+    }
+
+    // если доступна библиотека https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js
+    if (window.confetti) {
+        for (let i = 0; i < confettiCount; i++) {
+            var audio = new Audio("../assets/confetti-pop.mp3");
+            audio.loop = false;
+            audio.volume = 0.1;
+            audio.play();
+            confetti({
+                particleCount: 20,
+                spread: 1000,
+                startVelocity: 30,
+                ticks: 80,
+                origin: { x: randomNum(0.2, 0.8), y: randomNum(0.3, 0.6) },
+            });
+            await sleep(200);
+        }
+    }
+}
+
 export function shuffleArray(originalArray) {
     const array = originalArray.slice(); // create a copy
     let currentIndex = array.length;
@@ -249,8 +287,13 @@ export function shuffleArray(originalArray) {
         currentIndex--;
         // And swap it with the current element.
         [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
+            array[randomIndex],
+            array[currentIndex],
+        ];
     }
 
     return array;
+}
+function randomNum(min, max) {
+    return Math.random() * (max - min) + min;
 }
