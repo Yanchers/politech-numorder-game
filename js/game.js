@@ -9,10 +9,6 @@ import {
 } from "./ui.js";
 import { LEVELS } from "./levels.js";
 
-function randomNum(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
 export let state = {
     user: null,
     difficulty: null,
@@ -188,4 +184,9 @@ export function finishLevel(success) {
     // persist last result and navigate to final page where it will be rendered
     saveLastResult(entry);
     show(views.final);
+}
+
+
+function randomNum(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }

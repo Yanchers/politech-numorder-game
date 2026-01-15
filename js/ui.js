@@ -31,17 +31,19 @@ export function setPlayerInfo(text) {
 export function setLevelTitle(text) {
     document.getElementById("level-title").textContent = text;
 }
+let feedbackTimer = null;
+let feedbackCleanupTimer = null;
 export function setFeedback(text, duration = 3000) {
     const el = document.getElementById("feedback");
     if (!el) return;
     // очищаем прошлый таймер
-    if (el._feedbackTimer) {
-        clearTimeout(el._feedbackTimer);
-        el._feedbackTimer = null;
+    if (feedbackTimer) {
+        clearTimeout(feedbackTimer);
+        feedbackTimer = null;
     }
-    if (el._cleanupTimer) {
-        clearTimeout(el._cleanupTimer);
-        el._cleanupTimer = null;
+    if (feedbackCleanupTimer) {
+        clearTimeout(feedbackCleanupTimer);
+        feedbackCleanupTimer = null;
     }
     el.textContent = text;
     // добавляем класс анимации появления
@@ -49,16 +51,16 @@ export function setFeedback(text, duration = 3000) {
     el.classList.add("feedback-show");
 
     // после duration убираем сообщение
-    el._feedbackTimer = setTimeout(() => {
+    feedbackTimer = setTimeout(() => {
         el.classList.remove("feedback-show");
         el.classList.add("feedback-hide");
-        // cleanup after animation out completes (match CSS duration ~360ms)
-        el._cleanupTimer = setTimeout(() => {
+        // когда анимация скрытия закончится, очищаем текст
+        feedbackCleanupTimer = setTimeout(() => {
             el.classList.remove("feedback-hide");
             el.textContent = "";
-            el._cleanupTimer = null;
-        }, 420);
-        el._feedbackTimer = null;
+            feedbackCleanupTimer = null;
+        }, 420); // примерная длительность анимации скрытия
+        feedbackTimer = null;
     }, duration);
 }
 
