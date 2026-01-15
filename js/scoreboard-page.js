@@ -14,7 +14,9 @@ window.addEventListener("DOMContentLoaded", () => {
         ui.setCurrentUserInfo(undefined);
         ui.show(ui.views.auth);
     };
-    ui.renderLeaderboard(storage.getScores().sort((a, b) => b.score - a.score).slice(0, 50));
+
+    ui.renderLeaderboard(storage.getScores().sort((a, b) => b.score - a.score));
+
     Array.from(document.getElementsByClassName("btn-restart")).forEach((b) => {
         b.onclick = () => ui.show(ui.views.menu);
     });
