@@ -17,7 +17,7 @@ export const LEVELS = {
                 title: "Шаг +2",
                 // длина 6
                 sequences: [[2, 4, null, 8, 10, 12]],
-                choices: [6],
+                choices: [6, 10, 5],
                 correctAnswers: [[2, 4, 6, 8, 10, 12]],
                 timeLimit: 50,
                 mode: "drag",
@@ -27,7 +27,7 @@ export const LEVELS = {
                 title: "Геометрия ×2",
                 // длина 7
                 sequences: [[3, 6, 12, null, 48, 96, 192]],
-                choices: [24],
+                choices: [20, 24, 13],
                 correctAnswers: [[3, 6, 12, 24, 48, 96, 192]],
                 timeLimit: 60,
                 mode: "drag",
@@ -37,16 +37,16 @@ export const LEVELS = {
                 title: "Фибоначчи (малые)",
                 // длина 6
                 sequences: [[1, null, 2, 3, 5, 8]],
-                choices: [],
+                choices: [1, 2, 3],
                 correctAnswers: [[1, 1, 2, 3, 5, 8]],
                 timeLimit: 55,
-                mode: "input",
+                mode: "mixed",
             },
             {
                 id: "e4",
                 title: "Шаг +3",
                 sequences: [[1, 4, 7, null, 13, 16]],
-                choices: [10],
+                choices: [8, 10, 12],
                 correctAnswers: [[1, 4, 7, 10, 13, 16]],
                 timeLimit: 45,
                 mode: "drag",
@@ -55,7 +55,7 @@ export const LEVELS = {
                 id: "e5",
                 title: "Лёгкий чередующийся",
                 sequences: [[2, null, 6, 8, 10, 12, 14]],
-                choices: [4],
+                choices: [3],
                 correctAnswers: [[2, 4, 6, 8, 10, 12, 14]],
                 timeLimit: 50,
                 mode: "mixed",
@@ -64,12 +64,12 @@ export const LEVELS = {
                 id: "e6",
                 title: "Геометрия ×3 (малые)",
                 sequences: [[1, 3, null, 27, 81]],
-                choices: [9],
+                choices: [9, 10, 12],
                 correctAnswers: [[1, 3, 9, 27, 81]],
                 timeLimit: 55,
                 mode: "drag",
             },
-        ]
+        ],
     },
 
     normal: {
@@ -95,7 +95,10 @@ export const LEVELS = {
                     [50, null, 40, null, 30, null, 20],
                 ],
                 choices: [4, 8, 45, 35, 25],
-                correctAnswers: [[2, 4, 6, 8, 10, 12, 14], [50, 45, 40, 35, 30, 25, 20]],
+                correctAnswers: [
+                    [2, 4, 6, 8, 10, 12, 14],
+                    [50, 45, 40, 35, 30, 25, 20],
+                ],
                 timeLimit: 80,
                 mode: "mixed",
             },
@@ -117,7 +120,10 @@ export const LEVELS = {
                     [30, 25, null, 15, null, 5],
                 ],
                 choices: [10, 20],
-                correctAnswers: [[5, 10, 15, 20, 25, 30], [30, 25, 20, 15, 10, 5]],
+                correctAnswers: [
+                    [5, 10, 15, 20, 25, 30],
+                    [30, 25, 20, 15, 10, 5],
+                ],
                 timeLimit: 85,
                 mode: "mixed",
             },
@@ -139,7 +145,7 @@ export const LEVELS = {
                 timeLimit: 75,
                 mode: "input",
             },
-        ]
+        ],
     },
 
     hard: {
@@ -203,6 +209,6 @@ export const LEVELS = {
                 timeLimit: 120,
                 mode: "input",
             },
-        ]
+        ],
     },
 };
