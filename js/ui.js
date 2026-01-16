@@ -159,6 +159,7 @@ export function renderLevelUI(
                         // cell.dataset.userValue = v;
                         input.textContent = v;
                         input.value = v;
+                        cell.dataset.userValue = input.value;
                     };
                     cell.appendChild(input);
                 } else {
@@ -177,6 +178,7 @@ export function renderLevelUI(
                         // cell.dataset.userValue = v;
                         input.textContent = v;
                         input.value = v;
+                        cell.dataset.userValue = input.value;
                     };
                     cell.appendChild(input);
                 }
