@@ -61,7 +61,7 @@ header {
 
 
 .view {
-    width: 900px;
+    width: 800px;
     max-width: 95%;
     /* min-height: 500px; */
     background: rgba(255, 255, 255, 0.02);
@@ -117,4 +117,73 @@ button {
 
 .mb-12 {
     margin-bottom: 12px;
+}
+
+/* адаптив для главного блока */
+@media (max-width: 1024px) {
+    header {
+        padding: 10px 16px;
+    }
+
+    .view {
+        padding: 18px;
+        margin-top: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        align-items: flex-start;
+        gap: 8px;
+        padding: 10px 14px;
+    }
+
+    .view {
+        width: 95%;
+        padding: 16px;
+        margin: 0 auto;
+        margin-top: 20px;
+        border-radius: 10px;
+    }
+
+    .btn-goto-auth,
+    button {
+        width: 100%;
+        text-align: center;
+    }
+
+    input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+    header {
+        flex-direction: column;
+    }
+
+    .header-text {
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .view {
+        padding: 12px;
+        margin-top: 14px;
+        border-radius: 8px;
+    }
+
+    .btn-goto-auth {
+        display: block;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    header .current-user-container {
+        width: 100%;
+        justify-content: space-between;
+    }
 }
