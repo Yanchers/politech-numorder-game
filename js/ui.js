@@ -150,6 +150,16 @@ export function renderLevelUI(
                     input.oninput = () => {
                         cell.dataset.userValue = input.value;
                     };
+                    input.ondragover = (ev) => ev.preventDefault();
+                    input.ondrop = (ev) => {
+                        console.log("ondrop input");
+                        ev.preventDefault();
+                        const v = ev.dataTransfer.getData("text/plain");
+                        // cell.textContent = v;
+                        // cell.dataset.userValue = v;
+                        input.textContent = v;
+                        input.value = v;
+                    };
                     cell.appendChild(input);
                 } else {
                     const input = document.createElement("input");
@@ -157,6 +167,16 @@ export function renderLevelUI(
                     input.placeholder = "?";
                     input.oninput = () => {
                         cell.dataset.userValue = input.value;
+                    };
+                    input.ondragover = (ev) => ev.preventDefault();
+                    input.ondrop = (ev) => {
+                        console.log("ondrop input");
+                        ev.preventDefault();
+                        const v = ev.dataTransfer.getData("text/plain");
+                        // cell.textContent = v;
+                        // cell.dataset.userValue = v;
+                        input.textContent = v;
+                        input.value = v;
                     };
                     cell.appendChild(input);
                 }
