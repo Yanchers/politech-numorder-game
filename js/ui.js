@@ -117,6 +117,27 @@ export function renderLevelsList(diff, levels, onSelect) {
     });
 }
 
+
+// текущее выбранное значение для dblClick и click выбора
+let pickedChoice = null;
+let pickedChoiceEl = null;
+
+function clearPickedChoice() {
+    if (pickedChoiceEl) {
+        pickedChoiceEl.classList.remove("picked");
+        pickedChoiceEl = null;
+    }
+    pickedChoice = null;
+}
+
+function setPickedChoice(val, el) {
+    clearPickedChoice();
+    pickedChoice = val;
+    pickedChoiceEl = el || null;
+    if (pickedChoiceEl) {
+        pickedChoiceEl.classList.add("picked");
+    }
+}
 // Рендер самой последовательности и choices. Возвращает функцию для получения всех cell-элементов
 export function renderLevelUI(
     lvl,
@@ -186,6 +207,21 @@ export function renderLevelUI(
                 cell.textContent = val;
                 cell.dataset.userValue = val;
             }
+            // allow clicking a blank cell to place a previously double-clicked choice
+            cell.onclick = () => {
+                if (!pickedChoice) return;
+                // don't intercept clicks that directly target the input inside the cell
+                // if (ev.target && ev.target.tagName === "INPUT") return;
+                if (!cell.classList.contains("blank")) return;
+                const input = cell.querySelector("input");
+                if (input) {
+                    input.value = pickedChoice;
+                } else {
+                    cell.textContent = pickedChoice;
+                }
+                cell.dataset.userValue = pickedChoice;
+                clearPickedChoice();
+            };
             row.appendChild(cell);
         });
         sequencesEl.appendChild(row);
@@ -198,6 +234,14 @@ export function renderLevelUI(
             ch.textContent = c;
             ch.draggable = true;
             ch.ondragstart = (ev) => ev.dataTransfer.setData("text/plain", c);
+            // double-click to pick this choice for click-to-place
+            ch.ondblclick = () => {
+                setPickedChoice(c, ch);
+            };
+            // also allow a single click to clear selection if already picked
+            ch.onclick = () => {
+                if (pickedChoice === c) clearPickedChoice();
+            };
             choicesEl.appendChild(ch);
         });
     }
