@@ -6,6 +6,8 @@ export const LEADERBOARD_SCORES_KEY = 'numorder_scores';
 export const GAME_SELECTION_KEY = 'numorder_selection';
 // последний результат игры (используется в final-page.js)
 export const LAST_RESULT_KEY = 'numorder_last_result';
+// уровни игры
+export const LEVELS_KEY = 'numorder_generated_levels';
 
 // сохранение данных пользователя
 export function saveUser(name) {
@@ -59,5 +61,15 @@ export function saveLastResult(entry) {
 // загрузка последнего результата игры
 export function loadLastResult() {
     const raw = localStorage.getItem(LAST_RESULT_KEY);
+    return raw ? JSON.parse(raw) : null;
+}
+
+// сохранить уровни в локальное хранилище
+export function saveLevelsToStorage(levels) {
+    localStorage.setItem(LEVELS_KEY, JSON.stringify(levels));
+}
+// загрузить уровни из локального хранилища
+export function loadLevelsFromStorage() {
+    const raw = localStorage.getItem(LEVELS_KEY);
     return raw ? JSON.parse(raw) : null;
 }
