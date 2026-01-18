@@ -2,6 +2,7 @@ import { saveScore, saveLastResult, loadLevelsFromStorage, saveLevelsToStorage }
 import {
     renderLevelUI,
     setLevelTitle,
+    animateSequencesBounce,
     setFeedback,
     updateTimerDisplay,
     show,
@@ -249,6 +250,7 @@ export function checkAnswers(lvl) {
     state.totalScore += score;
     state.totalErrors += roundErrors;
 
+    animateSequencesBounce();
     if (correctCount === total) {
         setFeedback(`Отлично! (${correctCount}/${total}) 🤩👍 +${state.score} очков`, 2500);
         // setFeedback(`Идеально! 🤩👍 +${state.score} очков`, 2500);
@@ -258,7 +260,7 @@ export function checkAnswers(lvl) {
 
     // таймаут для того, чтобы анимация фидбека успела отработать
     setTimeout(() => {
-        // увеличиваем счётчик сыгранных раундов
+        // увеличиваем счётчик сыграных раундов
         state.numberOfPlayedRounds++;
         console.log("Сыграно раундов: ", `${state.numberOfPlayedRounds}/${GENERATED_LEVELS[state.difficulty].numberOfRounds}`);
         // если сыграно нужное кол-во раундов - завершаем игру

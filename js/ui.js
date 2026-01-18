@@ -211,6 +211,28 @@ export function renderLevelUI(
         );
 }
 
+// Выбирает все ячейки из уровня и анимирует их
+export async function animateSequencesBounce() {
+    const cells = Array.from(document.querySelectorAll('#sequences .sequence .cell'));
+    if (!cells.length) return;
+
+    // милисекунд между стартами анимации ячеек
+    const gap = 90;
+
+    cells.forEach((el, idx) => {
+        el.style.animationDelay = `${idx * gap}ms`;
+        el.classList.add('bounce');
+    });
+
+    const total = (cells.length - 1) * gap + 400;
+    setTimeout(() => {
+        cells.forEach((el) => {
+            el.classList.remove('bounce');
+            el.style.animationDelay = '';
+        });
+    }, total);
+}
+
 export function renderFinalStats(entry) {
     const el = document.getElementById("final-stats");
     // <div class="stat">
