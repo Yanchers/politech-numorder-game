@@ -1,6 +1,5 @@
 import * as storage from "./storage.js";
 import * as ui from "./ui.js";
-import { LEVELS } from "./levels.js";
 import * as game from "./game.js";
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -14,19 +13,20 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-logout").onclick = () => {
         storage.clearUser();
         ui.setCurrentUserInfo(undefined);
-        window.location.href = ui.views.auth;
+        ui.show(ui.views.auth);
     };
 
     const sel = storage.loadSelection();
+    console.log('Loaded selection from storage:', sel);
     if (!sel || !sel.difficulty || !sel.levelId) {
         // go back to levels selection
-        window.location.href = ui.views.levels;
+        ui.show(ui.views.levels);
         return;
     }
     const diff = sel.difficulty;
-    const lvl = LEVELS[diff].levels.find((l) => l.id === sel.levelId);
+    const lvl = game.GENERATED_LEVELS[diff]?.levels?.find((l) => l.id === sel.levelId);
     if (!lvl) {
-        window.location.href = ui.views.levels;
+        ui.show(ui.views.levels);
         return;
     }
     // initialize game using existing game module

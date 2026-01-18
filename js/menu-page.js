@@ -1,4 +1,4 @@
-import { LEVELS } from "./levels.js";
+import { GENERATED_LEVELS } from "./game.js";
 import * as storage from "./storage.js";
 import * as ui from "./ui.js";
 
@@ -17,10 +17,10 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     ui.renderDifficultiesList(
-        Object.keys(LEVELS).map((diff) => LEVELS[diff].title),
+        Object.keys(GENERATED_LEVELS).map((diff) => GENERATED_LEVELS[diff].title),
         (title) => {
-            const diff = Object.keys(LEVELS).find(
-                (key) => LEVELS[key].title === title
+            const diff = Object.keys(GENERATED_LEVELS).find(
+                (key) => GENERATED_LEVELS[key].title === title
             );
             // save selection and navigate to levels page
             storage.saveSelection({ difficulty: diff });

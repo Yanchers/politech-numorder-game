@@ -1,5 +1,5 @@
-import { LEVELS } from "./levels.js";
 import * as storage from "./storage.js";
+import * as game from "./game.js";
 import * as ui from "./ui.js";
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -23,7 +23,13 @@ window.addEventListener("DOMContentLoaded", () => {
         return;
     }
     const diffKey = sel.difficulty;
-    const diffObj = LEVELS[diffKey];
+    const savedLevels = game.GENERATED_LEVELS;
+    if (!savedLevels || !savedLevels[diffKey]) {
+        ui.show(ui.views.menu);
+        return;
+    }
+
+    const diffObj = savedLevels[diffKey];
     ui.renderLevelsList(diffObj.title, diffObj.levels, (lvl) => {
         // save starting level id and navigate to game
         storage.saveSelection({ difficulty: diffKey, levelId: lvl.id });
