@@ -1,4 +1,4 @@
-import { saveScore, saveLastResult } from "./storage.js";
+import { saveScore, saveLastResult, loadLevelsFromStorage, saveLevelsToStorage } from "./storage.js";
 import {
     renderLevelUI,
     setLevelTitle,
@@ -7,7 +7,115 @@ import {
     show,
     views,
 } from "./ui.js";
-import { LEVELS } from "./levels.js";
+import { LEVEL_TEMPLATES } from "./levels.js";
+
+function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function choose(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generateBaseSequence(type, length, difficultyKey) {
+    const scale = difficultyKey === "easy" ? 1 : difficultyKey === "normal" ? 2 : 4;
+    let seq = [];
+    if (type === "arithmetic") {
+        const start = randInt(1, 5 * scale);
+        const diff = randInt(1, 3 * scale);
+        for (let i = 0; i < length; i++) seq.push(start + i * diff);
+    } else if (type === "geometric") {
+        const start = randInt(1, 4);
+        const ratio = randInt(2, Math.min(4, 2 + scale));
+        for (let i = 0; i < length; i++) seq.push(Math.pow(ratio, i) * start);
+    } else {
+        // "step" — простой шаг (малые приращения)
+        const start = randInt(1, 5 * scale);
+        const diff = randInt(1, Math.max(1, 2 * scale));
+        for (let i = 0; i < length; i++) seq.push(start + i * diff);
+    }
+    return seq;
+}
+
+function generateLevelPoolForDifficulty(key, template) {
+    const poolSize = Math.max(6, template.numberOfRounds * 3);
+    const levels = [];
+    for (let idx = 0; idx < poolSize; idx++) {
+        const sequencesTypes = [];
+        const seqCount = randInt(template.sequencesPerLevel.min, template.sequencesPerLevel.max);
+        const sequences = [];
+        const correctAnswers = [];
+        for (let s = 0; s < seqCount; s++) {
+            const length = randInt(template.sequenceLength.min, template.sequenceLength.max);
+            const baseType = choose(template.baseTypes);
+            sequencesTypes.push(baseType);
+            const full = generateBaseSequence(baseType, length, key);
+            // determine holes count
+            const maxHoles = Math.max(
+                template.holes.min,
+                Math.floor(template.holes.maxFraction * length)
+            );
+            let holesCount = randInt(template.holes.min, Math.max(template.holes.min, maxHoles));
+            holesCount = Math.min(holesCount, Math.max(0, length - 2));
+
+            const holePositions = new Set();
+            while (holePositions.size < holesCount) {
+                // do not avoid first and last positions
+                const pos = randInt(0, length - 1);
+                holePositions.add(pos);
+            }
+
+            const seqWithHoles = full.map((v, i) => (holePositions.has(i) ? null : v));
+            sequences.push(seqWithHoles);
+            correctAnswers.push(full);
+        }
+
+        // build choices: include all missing values + some distractors
+        const missing = [];
+        for (const arr of correctAnswers) {
+            for (let i = 0; i < arr.length; i++) {
+                if (sequences.some((s) => s[i] === null)) {
+                    // if any sequence has null at this index, add missing
+                }
+            }
+        }
+        // Simpler: collect missing values by scanning sequence arrays
+        for (let i = 0; i < sequences.length; i++) {
+            for (let j = 0; j < sequences[i].length; j++) {
+                if (sequences[i][j] === null) missing.push(correctAnswers[i][j]);
+            }
+        }
+
+        const distractors = [];
+        const targetCount = Math.max(missing.length + 2, Math.min(3, missing.length + 2));
+        while (missing.length + distractors.length < targetCount) {
+            const base = choose(missing) || randInt(1, 20);
+            const delta = randInt(1, 6);
+            const candidate = Math.random() < 0.5 ? base + delta : Math.max(1, base - delta);
+            if (!missing.includes(candidate) && !distractors.includes(candidate)) distractors.push(candidate);
+        }
+
+        const choices = [...new Set([...missing, ...distractors])];
+
+        const timeLimit = randInt(template.timeLimitRange.min, template.timeLimitRange.max);
+        const mode = choose(template.allowedModes);
+
+        const idPrefix = key[0];
+        levels.push({
+            id: `${idPrefix}${idx + 1}`,
+            title: `${template.title} ${sequencesTypes.join(' | ')} ${idx + 1}`,
+            sequences,
+            choices,
+            correctAnswers,
+            timeLimit,
+            mode,
+        });
+    }
+    return levels;
+}
+
+// теперь вместо LEVELS у нас GENERATED_LEVELS
+export let GENERATED_LEVELS = {};
 
 export let state = {
     user: null,
@@ -98,7 +206,7 @@ export function checkAnswers(lvl) {
     clearInterval(state.timerId);
 
     const allCells = state.getCells();
-    const { correctAnswers, sequences } = LEVELS[state.difficulty].levels.find(
+    const { correctAnswers, sequences } = GENERATED_LEVELS[state.difficulty].levels.find(
         (l) => l.id === lvl.id
     );
 
@@ -152,15 +260,15 @@ export function checkAnswers(lvl) {
     setTimeout(() => {
         // увеличиваем счётчик сыгранных раундов
         state.numberOfPlayedRounds++;
-        console.log("Сыграно раундов: ", `${state.numberOfPlayedRounds}/${LEVELS[state.difficulty].numberOfRounds}`);
+        console.log("Сыграно раундов: ", `${state.numberOfPlayedRounds}/${GENERATED_LEVELS[state.difficulty].numberOfRounds}`);
         // если сыграно нужное кол-во раундов - завершаем игру
         if (
-            state.numberOfPlayedRounds === LEVELS[state.difficulty].numberOfRounds
+            state.numberOfPlayedRounds === GENERATED_LEVELS[state.difficulty].numberOfRounds
         ) {
             finishLevel(true);
         } else {
             // иначе - запускаем следующий доступный уровень
-            const availableLevels = LEVELS[state.difficulty].levels.filter(
+            const availableLevels = GENERATED_LEVELS[state.difficulty].levels.filter(
                 (l) => !state.playedLevels.includes(l.id)
             );
             const nextLevelIndex = randomNum(0, availableLevels.length - 1);
@@ -174,7 +282,7 @@ export function finishLevel(success) {
     clearInterval(state.timerId);
     const entry = {
         player: state.user.name,
-        difficulty: LEVELS[state.difficulty].title,
+        difficulty: GENERATED_LEVELS[state.difficulty].title,
         level: state.level.id,
         score: state.totalScore,
         errors: state.totalErrors,
@@ -190,3 +298,29 @@ export function finishLevel(success) {
 function randomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+export function regenerateLevels() {
+    for (const key of Object.keys(LEVEL_TEMPLATES)) {
+        const tpl = LEVEL_TEMPLATES[key];
+        GENERATED_LEVELS[key] = { ...tpl, levels: generateLevelPoolForDifficulty(key, tpl) };
+    }
+    // set levels into localstorage
+    saveLevelsToStorage(GENERATED_LEVELS);
+}
+function init() {
+    const savedLevels = loadLevelsFromStorage()
+    // create levels dynamically if not already in localstorage
+    if (savedLevels === null) {
+        console.log('No levels found in storage, generating new levels...');
+        for (const key of Object.keys(LEVEL_TEMPLATES)) {
+            const tpl = LEVEL_TEMPLATES[key];
+            GENERATED_LEVELS[key] = { ...tpl, levels: generateLevelPoolForDifficulty(key, tpl) };
+        }
+        // set levels into localstorage
+        saveLevelsToStorage(GENERATED_LEVELS);
+    } else {
+        console.log('Levels loaded from storage.');
+        GENERATED_LEVELS = savedLevels;
+    }
+};
+init();
