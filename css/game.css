@@ -6,11 +6,12 @@
     justify-content: center;
     margin: 16px 0;
     flex-wrap: wrap;
-}
-
-.sequence:not(:last-child) {
     padding-bottom: 12px;
     border-bottom: solid 1px rgba(255, 255, 255, 0.04);
+}
+
+.sequence:last-child {
+    margin-bottom: 24px;
 }
 
 .cell {
