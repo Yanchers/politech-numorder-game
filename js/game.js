@@ -154,7 +154,7 @@ export function initGame(diff, lvl, user) {
     setLevelTitle(lvl.title);
     // рендерим ячейки последовательностей (сам уровень)
     const getCells = renderLevelUI(lvl, {
-        onSubmit: () => checkAnswers(lvl),
+        onSubmit: () => checkAnswers(state.level),
         onQuit: () => {
             clearInterval(state.timerId);
             show(views.menu);
@@ -163,6 +163,13 @@ export function initGame(diff, lvl, user) {
     state.getCells = getCells;
     // старт таймера
     startTimer(lvl.timeLimit);
+
+    // подписка на клавишу Enter для сабмита ответов
+    document.onkeydown = function (e) {
+        if (e.key === "Enter") {
+            checkAnswers(state.level);
+        }
+    };
 }
 
 export function startNextLevel(lvl) {
@@ -175,7 +182,7 @@ export function startNextLevel(lvl) {
     setLevelTitle(lvl.title);
     // рендерим ячейки последовательностей
     const getCells = renderLevelUI(lvl, {
-        onSubmit: () => checkAnswers(lvl),
+        onSubmit: () => checkAnswers(state.level),
         onQuit: () => {
             clearInterval(state.timerId);
             show(views.menu);
@@ -202,13 +209,13 @@ export function startTimer(sec) {
     }, 1000);
 }
 
-export function checkAnswers(lvl) {
+export function checkAnswers() {
     // останавливаем таймер
     clearInterval(state.timerId);
 
     const allCells = state.getCells();
     const { correctAnswers, sequences } = GENERATED_LEVELS[state.difficulty].levels.find(
-        (l) => l.id === lvl.id
+        (l) => l.id === state.level.id
     );
 
     let correctCount = 0,
@@ -240,7 +247,7 @@ export function checkAnswers(lvl) {
     const difficultyMultiplier = state.difficulty === "easy" ? 1 : state.difficulty === "normal" ? 1.5 : 2;
     const BASE_POINT = 100; // base points for a correct item
     const pointsFromCorrect = correctCount * BASE_POINT * difficultyMultiplier;
-    const timeFraction = lvl.timeLimit > 0 ? Math.max(0, state.timeLeft) / lvl.timeLimit : 0;
+    const timeFraction = state.level.timeLimit > 0 ? Math.max(0, state.timeLeft) / state.level.timeLimit : 0;
     const timeBonus = Math.round(timeFraction * BASE_POINT * difficultyMultiplier * 0.5); // up to 50% of BASE_POINT per round
     const penaltyPerError = 50;
     const penalty = roundErrors * penaltyPerError;
