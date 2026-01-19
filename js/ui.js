@@ -1,3 +1,5 @@
+import { LEVEL_TEMPLATES } from "./levels.js";
+
 export const views = {
     auth: "auth.html",
     menu: "menu.html",
@@ -106,12 +108,17 @@ export function renderDifficultiesList(difficulties, onSelect) {
 
 // Рендер списка уровней, callback(level) вызывается при выборе
 export function renderLevelsList(diff, levels, onSelect) {
-    document.getElementById("levels-title").textContent = `Уровни — ${diff}`;
+    const levelTitle = LEVEL_TEMPLATES[diff]
+        ? LEVEL_TEMPLATES[diff].title
+        : String(diff);
+    document.getElementById("levels-title").textContent = `Уровни — ${levelTitle}`;
     const list = document.getElementById("levels-list");
     list.innerHTML = "";
     levels.forEach((lvl, idx) => {
         const btn = document.createElement("button");
         btn.appendChild(document.createTextNode(`${idx + 1}. ${lvl.title}`));
+        const key = String(diff).toLowerCase();
+        btn.classList.add(`difficulty-${key}`);
         btn.onclick = () => onSelect(lvl);
         list.appendChild(btn);
     });

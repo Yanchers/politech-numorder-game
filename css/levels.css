@@ -11,4 +11,21 @@
 
 #levels-list button {
     flex: 1 1 calc(30.333% - 16px);
+    background: var(--card-lighter);
+    color: var(--text-color);
+}
+
+#levels-list button.difficulty-easy {
+    background: var(--easy-card);
+    color: var(--easy-text);
+}
+
+#levels-list button.difficulty-normal {
+    background: var(--normal-card);
+    color: var(--normal-text);
+}
+
+#levels-list button.difficulty-hard {
+    background: var(--hard-card);
+    color: var(--hard-text);
 }

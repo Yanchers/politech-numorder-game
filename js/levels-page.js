@@ -30,7 +30,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     const diffObj = savedLevels[diffKey];
-    ui.renderLevelsList(diffObj.title, diffObj.levels, (lvl) => {
+    ui.renderLevelsList(diffKey, diffObj.levels, (lvl) => {
         // save starting level id and navigate to game
         storage.saveSelection({ difficulty: diffKey, levelId: lvl.id });
         ui.show(ui.views.game);

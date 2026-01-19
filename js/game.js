@@ -150,6 +150,12 @@ export function initGame(diff, lvl, user) {
     };
     // показываем игровое поле
     show(views.game);
+    // css-классы для цветов сложности
+    const gameEl = document.getElementById('game');
+    if (gameEl) {
+        gameEl.classList.remove('difficulty-easy', 'difficulty-normal', 'difficulty-hard');
+        gameEl.classList.add(`difficulty-${diff}`);
+    }
     // ставим информацию
     setLevelTitle(lvl.title);
     // рендерим ячейки последовательностей (сам уровень)

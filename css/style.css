@@ -8,6 +8,15 @@
     --muted: #9aa4b2
 }
 
+:root {
+    --easy-card: #06301a;
+    --easy-text: #d6fbe0;
+    --normal-card: #0b2140;
+    --normal-text: #dff1ff;
+    --hard-card: #3a0712a4;
+    --hard-text: #ffe6fb;
+}
+
 * {
     box-sizing: border-box;
     font-family: "Nunito", sans-serif;
