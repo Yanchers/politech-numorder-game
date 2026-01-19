@@ -250,6 +250,19 @@ export function renderLevelUI(
                 if (pickedChoice === c) clearPickedChoice();
             };
             choicesEl.appendChild(ch);
+
+            const parentW = choicesEl.clientWidth || choicesEl.getBoundingClientRect().width;
+            const parentH = choicesEl.clientHeight || choicesEl.getBoundingClientRect().height;
+            const elW = ch.offsetWidth;
+            const elH = ch.offsetHeight;
+            // максимальные координаты для размещения
+            const maxLeft = Math.max(0, parentW - elW);
+            const maxTop = Math.max(0, parentH - elH);
+            // рандомные координаты от 0 до максимальных
+            const left = Math.floor(Math.random() * (maxLeft + 1));
+            const top = Math.floor(Math.random() * (maxTop + 1));
+            ch.style.left = `${left}px`;
+            ch.style.top = `${top}px`;
         });
     }
 

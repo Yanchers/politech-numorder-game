@@ -74,14 +74,13 @@
 }
 
 .choices {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
+    position: relative;
     margin: 12px 0;
+    min-height: 120px;
 }
 
 .choice {
+    position: absolute;
     width: 70px;
     height: 40px;
     display: flex;
@@ -91,6 +90,7 @@
     padding: 8px 12px;
     border-radius: 8px;
     cursor: grab;
+    user-select: none;
 }
 
 #game.difficulty-easy .cell {

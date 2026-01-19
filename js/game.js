@@ -24,15 +24,17 @@ function generateBaseSequence(type, length, difficultyKey) {
     if (type === "arithmetic") {
         const start = randInt(1, 5 * scale);
         const diff = randInt(1, 3 * scale);
+        // a_n = start + (n-1) * diff
         for (let i = 0; i < length; i++) seq.push(start + i * diff);
     } else if (type === "geometric") {
         const start = randInt(1, 4);
         const ratio = randInt(2, Math.min(4, 2 + scale));
+        // b_n = start * ratio^(n-1)
         for (let i = 0; i < length; i++) seq.push(Math.pow(ratio, i) * start);
     } else {
-        // "step" — простой шаг (малые приращения)
+        // "step" простой шаг
         const start = randInt(1, 5 * scale);
-        const diff = randInt(1, Math.max(1, 2 * scale));
+        const diff = randInt(1, Math.max(3, 3 * scale));
         for (let i = 0; i < length; i++) seq.push(start + i * diff);
     }
     return seq;
@@ -73,14 +75,6 @@ function generateLevelPoolForDifficulty(key, template) {
 
         // build choices: include all missing values + some distractors
         const missing = [];
-        for (const arr of correctAnswers) {
-            for (let i = 0; i < arr.length; i++) {
-                if (sequences.some((s) => s[i] === null)) {
-                    // if any sequence has null at this index, add missing
-                }
-            }
-        }
-        // Simpler: collect missing values by scanning sequence arrays
         for (let i = 0; i < sequences.length; i++) {
             for (let j = 0; j < sequences[i].length; j++) {
                 if (sequences[i][j] === null) missing.push(correctAnswers[i][j]);
@@ -88,6 +82,7 @@ function generateLevelPoolForDifficulty(key, template) {
         }
 
         const distractors = [];
+        // ensure at least 3 choices
         const targetCount = Math.max(missing.length + 2, Math.min(3, missing.length + 2));
         while (missing.length + distractors.length < targetCount) {
             const base = choose(missing) || randInt(1, 20);
@@ -104,7 +99,7 @@ function generateLevelPoolForDifficulty(key, template) {
         const idPrefix = key[0];
         levels.push({
             id: `${idPrefix}${idx + 1}`,
-            title: `${template.title} ${sequencesTypes.join(' | ')} ${idx + 1}`,
+            title: `${template.title} ${sequencesTypes.join(', ')} ${idx + 1}`,
             sequences,
             choices,
             correctAnswers,
