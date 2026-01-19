@@ -235,6 +235,8 @@ export function renderLevelUI(
     });
 
     if (lvl.choices && lvl.choices.length > 0) {
+        // keep track of placed rectangles to avoid overlaps
+        const placedRects = [];
         shuffleArray(lvl.choices).forEach((c) => {
             const ch = document.createElement("div");
             ch.className = "choice";
@@ -255,12 +257,31 @@ export function renderLevelUI(
             const parentH = choicesEl.clientHeight || choicesEl.getBoundingClientRect().height;
             const elW = ch.offsetWidth;
             const elH = ch.offsetHeight;
-            // максимальные координаты для размещения
             const maxLeft = Math.max(0, parentW - elW);
             const maxTop = Math.max(0, parentH - elH);
-            // рандомные координаты от 0 до максимальных
-            const left = Math.floor(Math.random() * (maxLeft + 1));
-            const top = Math.floor(Math.random() * (maxTop + 1));
+
+            let left = 0;
+            let top = 0;
+            let placed = false;
+            // пока не удалось разместить элемент без пересечений - генерировать новые координаты
+            while (!placed) {
+                left = Math.floor(Math.random() * (maxLeft + 1));
+                top = Math.floor(Math.random() * (maxTop + 1));
+                const rect = { left, top, right: left + elW, bottom: top + elH };
+                let overlap = false;
+                for (const r of placedRects) {
+                    if (!(rect.right <= r.left || rect.left >= r.right || rect.bottom <= r.top || rect.top >= r.bottom)) {
+                        overlap = true;
+                        break;
+                    }
+                }
+                if (!overlap) {
+                    placedRects.push(rect);
+                    placed = true;
+                    break;
+                }
+            }
+
             ch.style.left = `${left}px`;
             ch.style.top = `${top}px`;
         });
